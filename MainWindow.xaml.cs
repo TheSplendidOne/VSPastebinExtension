@@ -33,14 +33,20 @@ namespace VSPastebinExtension
 
         private async void PasteOnClick(Object sender, RoutedEventArgs e)
         {
-            Pastebin.DevKey = "4c8e82e3e03bef45028b783ecc14ace5";
-            Paste paste = await Paste.CreateAsync(
-                _text, 
-                PasteName.Text,
-                PastebinAPI.Language.Parse(SyntaxHighlighting.Text.ToLower()),
-                PastebinAPI.Visibility.Public,
-                PastebinHelper.StringToExpirationDictionary[PasteExposure.Text]);
-            PasteUrl.Text = paste.Url;
+            using (ButtonEnableWrapper wrapper = new ButtonEnableWrapper(PasteButton))
+            {
+                Pastebin.DevKey = "4c8e82e3e03bef45028b783ecc14ace5";
+                Paste paste = await Paste.CreateAsync(
+                    _text,
+                    PasteName.Text,
+                    PastebinAPI.Language.Parse(SyntaxHighlighting.Text.ToLower()),
+                    PastebinAPI.Visibility.Public,
+                    PastebinHelper.StringToExpirationDictionary[PasteExposure.Text]);
+                if (paste.Url.StartsWith("https://pastebin.com/"))
+                    PasteUrl.Text = paste.Url;
+                else
+                    MessageBox.Show(paste.Url, "Pastebin Extension");
+            }
         }
     }
 }

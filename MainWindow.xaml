@@ -12,7 +12,8 @@
     <platformUi:DialogWindow.Resources>
         <System:Double x:Key="DefaultFontSize">18</System:Double>
         <System:Double x:Key="TitleFontSize">26</System:Double>
-        <Thickness x:Key="DefaultMargin">0,15,20,20</Thickness>
+        <Thickness x:Key="LeftColumnMargin">0,15,20,20</Thickness>
+        <Thickness x:Key="RightColumnMargin">0,15,0,20</Thickness>
     </platformUi:DialogWindow.Resources>
     <StackPanel Margin="25">
         <TextBlock Margin="0,0,0,10" Text="Optional Paste Settings" FontSize="{DynamicResource TitleFontSize}"/>
@@ -27,20 +28,20 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" Margin="{DynamicResource DefaultMargin}" Text="Paste Name / Title:" FontSize="{DynamicResource DefaultFontSize}"/>
-            <TextBlock Grid.Column="0" Grid.Row="1" Margin="{DynamicResource DefaultMargin}" Text="Syntax Highlighting:" FontSize="{DynamicResource DefaultFontSize}"/>
-            <TextBlock Grid.Column="0" Grid.Row="2" Margin="{DynamicResource DefaultMargin}" Text="Paste Exposure:" FontSize="{DynamicResource DefaultFontSize}"/>
-            <TextBox Name="PasteName" Grid.Column="1" Grid.Row="0" Margin="{DynamicResource DefaultMargin}" FontSize="{DynamicResource DefaultFontSize}" TextAlignment="Center"/>
-            <ComboBox Name="SyntaxHighlighting" Grid.Column="1" Grid.Row="1" Margin="{DynamicResource DefaultMargin}" FontSize="{DynamicResource DefaultFontSize}" IsSynchronizedWithCurrentItem="True"/>
-            <ComboBox Name="PasteExposure" Grid.Column="1" Grid.Row="2" Margin="{DynamicResource DefaultMargin}" FontSize="{DynamicResource DefaultFontSize}" IsSynchronizedWithCurrentItem="True"/>
+            <TextBlock Grid.Column="0" Grid.Row="0" Margin="{DynamicResource LeftColumnMargin}" Text="Paste Name / Title:" FontSize="{DynamicResource DefaultFontSize}"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Margin="{DynamicResource LeftColumnMargin}" Text="Syntax Highlighting:" FontSize="{DynamicResource DefaultFontSize}"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Margin="{DynamicResource LeftColumnMargin}" Text="Paste Exposure:" FontSize="{DynamicResource DefaultFontSize}"/>
+            <TextBox Name="PasteName" Grid.Column="1" Grid.Row="0" Margin="{DynamicResource RightColumnMargin}" FontSize="{DynamicResource DefaultFontSize}" TextAlignment="Left"/>
+            <ComboBox Name="SyntaxHighlighting" Grid.Column="1" Grid.Row="1" Margin="{DynamicResource RightColumnMargin}" FontSize="{DynamicResource DefaultFontSize}" IsSynchronizedWithCurrentItem="True"/>
+            <ComboBox Name="PasteExposure" Grid.Column="1" Grid.Row="2" Margin="{DynamicResource RightColumnMargin}" FontSize="{DynamicResource DefaultFontSize}" IsSynchronizedWithCurrentItem="True"/>
         </Grid>
-        <Grid Margin="{DynamicResource DefaultMargin}">
+        <Grid Margin="0,15,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Padding="20,5" Content="Paste" FontSize="{DynamicResource DefaultFontSize}" Click="PasteOnClick"/>
-            <TextBox Grid.Column="1" Name="PasteUrl" IsReadOnly="True" Margin="20,0,0,0" FontSize="{DynamicResource DefaultFontSize}" TextAlignment="Center"/>
+            <Button Name="PasteButton" Grid.Column="0" Padding="20,5" Content="Paste" FontSize="{DynamicResource DefaultFontSize}" Click="PasteOnClick" IsDefault="True"/>
+            <TextBox Name="PasteUrl" Grid.Column="1" Padding="5,5" IsReadOnly="True" Margin="20,0,0,0" FontSize="{DynamicResource DefaultFontSize}" TextAlignment="Left"/>
         </Grid>
     </StackPanel>
 </platformUi:DialogWindow>

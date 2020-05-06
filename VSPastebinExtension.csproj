@@ -45,6 +45,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ButtonEnableWrapper.cs" />
     <Compile Include="MenuCommandEnableWrapper.cs" />
     <Compile Include="MainCommand.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -86,13 +87,22 @@
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\MainCommand.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="PastebinIcon.png" />
+    <Content Include="Resources\PastebinIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Resources\PastebinPreview.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />

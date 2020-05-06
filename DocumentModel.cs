@@ -22,9 +22,18 @@ namespace VSPastebinExtension
 
         public static async Task<DocumentModel> GetActiveDocumentAsync(AsyncPackage package)
         {
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
-            DTE dte = (DTE) await package.GetServiceAsync(typeof(DTE));
-            return new DocumentModel(dte.ActiveDocument.Name, dte.ActiveDocument.Language, GetCurrentTextFile(dte.ActiveDocument));
+            try
+            {
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
+                DTE dte = (DTE) await package.GetServiceAsync(typeof(DTE));
+                return dte.ActiveDocument == null
+                    ? null
+                    : new DocumentModel(dte.ActiveDocument.Name, dte.ActiveDocument.Language, GetCurrentTextFile(dte.ActiveDocument));
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         private static String GetCurrentTextFile(Document document)
