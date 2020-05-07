@@ -2,9 +2,7 @@
 <CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <Extern href="stdidcmd.h"/>
   <Extern href="vsshlids.h"/>
-
   <Commands package="guidVSPastebinExtensionPackage">
-
     <Menus>
       <Menu guid="guidVSPastebinExtensionPackageCmdSet" id="Toolbar" type="Toolbar">
         <CommandFlag>DefaultDocked</CommandFlag>
@@ -14,13 +12,11 @@
         </Strings>
       </Menu>
     </Menus>
-
     <Groups>
       <Group guid="guidVSPastebinExtensionPackageCmdSet" id="ToolbarGroup" priority="0x0000">
         <Parent guid="guidVSPastebinExtensionPackageCmdSet" id="Toolbar"/>
       </Group>
     </Groups>
-
     <Buttons>
       <Button guid="guidVSPastebinExtensionPackageCmdSet" id="MainCommand" priority="0x0100" type="Button">
         <Parent guid="guidVSPastebinExtensionPackageCmdSet" id="ToolbarGroup" />
@@ -30,13 +26,13 @@
         </Strings>
       </Button>
     </Buttons>
-
     <Bitmaps>
       <Bitmap guid="guidImages" href="Resources\PastebinIcon.png" usedList="pic"/>
     </Bitmaps>
-
   </Commands>
-
+  <KeyBindings>
+    <KeyBinding guid="guidVSPastebinExtensionPackageCmdSet" id="MainCommand" editor="guidVSStd97" mod1="Alt" key1="P"/>
+  </KeyBindings>
   <Symbols>
     <GuidSymbol name="guidVSPastebinExtensionPackage" value="{54d35da1-7050-4e22-a217-be1f9507f274}" />
     <GuidSymbol name="guidVSPastebinExtensionPackageCmdSet" value="{c09c7394-49db-45eb-af9d-692690d35cb8}">
