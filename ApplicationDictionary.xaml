@@ -1,0 +1,37 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:VSPastebinExtension"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:Double x:Key="DefaultFontSize">16</system:Double>
+    <system:Double x:Key="TitleFontSize">24</system:Double>
+    <Thickness x:Key="LeftColumnMargin">0,15,20,15</Thickness>
+    <Thickness x:Key="RightColumnMargin">0,15,0,15</Thickness>
+    <Thickness x:Key="DefaultGridMargin">0,15,0,0</Thickness>
+    <Thickness x:Key="ButtonPadding">20,5</Thickness>
+    <Thickness x:Key="MainContainerMargin">25</Thickness>
+    <Thickness x:Key="SubcolumnMargin">20,0,0,0</Thickness>
+    <Thickness x:Key="FormPadding">5,5</Thickness>
+    <Style x:Key="Form">
+        <Setter Property="Control.FontSize" Value="{DynamicResource DefaultFontSize}"/>
+    </Style>
+    <Style x:Key="LeftColumnTextBlock" BasedOn="{StaticResource Form}" TargetType="TextBlock">
+        <Setter Property="Margin" Value="{DynamicResource LeftColumnMargin}"/>
+        <Setter Property="Padding"  Value="{DynamicResource FormPadding}"/>
+    </Style>
+    <Style x:Key="RightColumnForm" BasedOn="{StaticResource Form}">
+        <Setter Property="Control.Margin" Value="{DynamicResource RightColumnMargin}"/>
+    </Style>
+    <Style x:Key="RightColumnTextBox" BasedOn="{StaticResource RightColumnForm}" TargetType="TextBox">
+        <Setter Property="Padding"  Value="{DynamicResource FormPadding}"/>
+    </Style>
+    <Style x:Key="RightColumnComboBox" BasedOn="{StaticResource RightColumnForm}" TargetType="ComboBox">
+        <Setter Property="IsSynchronizedWithCurrentItem" Value="True"/>
+        <Setter Property="Padding" Value="{DynamicResource FormPadding}"/>
+    </Style>
+    <Style x:Key="Button" BasedOn="{StaticResource Form}" TargetType="Button">
+        <Setter Property="Padding" Value="{DynamicResource ButtonPadding}"/>
+    </Style>
+    <Style x:Key="SubcolumnForm" BasedOn="{StaticResource Form}">
+        <Setter Property="Control.Margin" Value="{DynamicResource SubcolumnMargin}"/>
+    </Style>
+</ResourceDictionary>

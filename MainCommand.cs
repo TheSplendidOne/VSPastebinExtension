@@ -43,7 +43,7 @@ namespace VSPastebinExtension
             {
                 DocumentModel model = await DocumentModel.GetActiveDocumentAsync(package);
                 if (model == null)
-                    MessageBox.Show("Open the file to paste!", "Pastebin Extension");
+                    MessageBox.Show("Open the file to paste!", PastebinHelper.DefaultCaption);
                 else
                     new MainWindow(model).ShowModal();
             }

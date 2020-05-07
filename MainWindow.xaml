@@ -10,17 +10,14 @@
              Title="Pastebin Extension"
              SizeToContent="WidthAndHeight">
     <platformUi:DialogWindow.Resources>
-        <System:Double x:Key="DefaultFontSize">18</System:Double>
-        <System:Double x:Key="TitleFontSize">26</System:Double>
-        <Thickness x:Key="LeftColumnMargin">0,15,20,20</Thickness>
-        <Thickness x:Key="RightColumnMargin">0,15,0,20</Thickness>
+        <ResourceDictionary Source="ApplicationDictionary.xaml"/>
     </platformUi:DialogWindow.Resources>
-    <StackPanel Margin="25">
-        <TextBlock Margin="0,0,0,10" Text="Optional Paste Settings" FontSize="{DynamicResource TitleFontSize}"/>
-        <Grid>
+    <StackPanel Margin="{DynamicResource MainContainerMargin}">
+        <TextBlock Text="Optional Paste Settings" FontSize="{DynamicResource TitleFontSize}"/>
+        <Grid Margin="{DynamicResource DefaultGridMargin}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="260"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -28,20 +25,32 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" Margin="{DynamicResource LeftColumnMargin}" Text="Paste Name / Title:" FontSize="{DynamicResource DefaultFontSize}"/>
-            <TextBlock Grid.Column="0" Grid.Row="1" Margin="{DynamicResource LeftColumnMargin}" Text="Syntax Highlighting:" FontSize="{DynamicResource DefaultFontSize}"/>
-            <TextBlock Grid.Column="0" Grid.Row="2" Margin="{DynamicResource LeftColumnMargin}" Text="Paste Exposure:" FontSize="{DynamicResource DefaultFontSize}"/>
-            <TextBox Name="PasteName" Grid.Column="1" Grid.Row="0" Margin="{DynamicResource RightColumnMargin}" FontSize="{DynamicResource DefaultFontSize}" TextAlignment="Left"/>
-            <ComboBox Name="SyntaxHighlighting" Grid.Column="1" Grid.Row="1" Margin="{DynamicResource RightColumnMargin}" FontSize="{DynamicResource DefaultFontSize}" IsSynchronizedWithCurrentItem="True"/>
-            <ComboBox Name="PasteExposure" Grid.Column="1" Grid.Row="2" Margin="{DynamicResource RightColumnMargin}" FontSize="{DynamicResource DefaultFontSize}" IsSynchronizedWithCurrentItem="True"/>
+            <TextBlock Grid.Column="0" Grid.Row="0" Style="{DynamicResource LeftColumnTextBlock}" Text="Paste Name / Title:"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Style="{DynamicResource LeftColumnTextBlock}" Text="Syntax Highlighting:"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Style="{DynamicResource LeftColumnTextBlock}" Text="Paste Expiration:"/>
+            <TextBlock Grid.Column="0" Grid.Row="3" Style="{DynamicResource LeftColumnTextBlock}" Text="Paste Exposure:"/>
+            <TextBox Name="PasteName" Grid.Column="1" Grid.Row="0" Style="{DynamicResource RightColumnTextBox}" MaxLength="60"/>
+            <ComboBox Name="SyntaxHighlighting" Grid.Column="1" Grid.Row="1" Style="{DynamicResource RightColumnComboBox}"/>
+            <ComboBox Name="PasteExpiration" Grid.Column="1" Grid.Row="2" Style="{DynamicResource RightColumnComboBox}"/>
+            <ComboBox Name="PasteExposure" Grid.Column="1" Grid.Row="3" Style="{DynamicResource RightColumnComboBox}"/>
         </Grid>
-        <Grid Margin="0,15,0,0">
+        <Grid Margin="{DynamicResource DefaultGridMargin}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Name="AuthorizationButton" Grid.Column="0" Style="{DynamicResource Button}" Click="AuthorizationOnClick"/>
+            <TextBlock Name="Username" Grid.Column="1" Style="{DynamicResource SubcolumnForm}" Padding="{DynamicResource FormPadding}"/>
+            <CheckBox Name="PasteAsAGuestCheckBox" Grid.Column="2" Style="{DynamicResource SubcolumnForm}" Padding="{DynamicResource FormPadding}" VerticalContentAlignment="Center" Content="Paste as a guest"/>
+        </Grid>
+        <Grid Margin="{DynamicResource DefaultGridMargin}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Name="PasteButton" Grid.Column="0" Padding="20,5" Content="Paste" FontSize="{DynamicResource DefaultFontSize}" Click="PasteOnClick" IsDefault="True"/>
-            <TextBox Name="PasteUrl" Grid.Column="1" Padding="5,5" IsReadOnly="True" Margin="20,0,0,0" FontSize="{DynamicResource DefaultFontSize}" TextAlignment="Left"/>
+            <Button Name="PasteButton" Grid.Column="0" Style="{DynamicResource Button}" Content="Paste" Click="PasteOnClick" IsDefault="True"/>
+            <TextBox Name="PasteUrl" Grid.Column="1" Style="{DynamicResource SubcolumnForm}" Padding="{DynamicResource FormPadding}" IsReadOnly="True"/>
         </Grid>
     </StackPanel>
 </platformUi:DialogWindow>

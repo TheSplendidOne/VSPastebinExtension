@@ -13,8 +13,9 @@ namespace VSPastebinExtension
         {
             InitializeComponent();
             InitializeComboBoxes();
+            ApplyAuthorizedUserAbilities();
             PasteName.Text = model.Name;
-            PasteExposure.Text = PastebinHelper.ExpirationToStringDictionary[Expiration.OneMonth];
+            PasteExpiration.Text = PastebinHelper.ExpirationToStringDictionary[Expiration.OneMonth];
             SyntaxHighlighting.Text = PastebinHelper.IdentifyLanguage(model.Language).ToUpper();
             _text = model.Text;
         }
@@ -27,7 +28,36 @@ namespace VSPastebinExtension
             }
             foreach (var expiration in PastebinHelper.StringToExpirationDictionary.Keys)
             {
-                PasteExposure.Items.Add(expiration);
+                PasteExpiration.Items.Add(expiration);
+            }
+        }
+
+        private void ApplyAuthorizedUserAbilities()
+        {
+            if (AuthorizationManager.CurrentUser != null)
+            {
+                AuthorizationButton.Content = "Log Out";
+                Username.Text = AuthorizationManager.CurrentUser.Name;
+                PasteAsAGuestCheckBox.IsEnabled = true;
+                SetPasteExposureItems(PastebinAPI.Visibility.Public, PastebinAPI.Visibility.Unlisted, PastebinAPI.Visibility.Private);
+            }
+            else
+            {
+                AuthorizationButton.Content = "Sign In";
+                Username.Text = "Not authorized";
+                PasteAsAGuestCheckBox.IsChecked = false;
+                PasteAsAGuestCheckBox.IsEnabled = false;
+                SetPasteExposureItems(PastebinAPI.Visibility.Public, PastebinAPI.Visibility.Unlisted);
+            }
+            PasteExposure.SelectedIndex = 0;
+        }
+
+        private void SetPasteExposureItems(params PastebinAPI.Visibility[] items)
+        {
+            PasteExposure.Items.Clear();
+            foreach (var visibility in items)
+            {
+                PasteExposure.Items.Add(visibility);
             }
         }
 
@@ -35,17 +65,38 @@ namespace VSPastebinExtension
         {
             using (ButtonEnableWrapper wrapper = new ButtonEnableWrapper(PasteButton))
             {
-                Pastebin.DevKey = "4c8e82e3e03bef45028b783ecc14ace5";
-                Paste paste = await Paste.CreateAsync(
-                    _text,
-                    PasteName.Text,
-                    PastebinAPI.Language.Parse(SyntaxHighlighting.Text.ToLower()),
-                    PastebinAPI.Visibility.Public,
-                    PastebinHelper.StringToExpirationDictionary[PasteExposure.Text]);
+                PastebinHelper.ApplyDevKey();
+                Paste paste;
+                if(AuthorizationManager.Authorized && !(Boolean)PasteAsAGuestCheckBox.IsChecked)
+                    paste = await AuthorizationManager.CurrentUser.CreatePasteAsync(
+                        _text,
+                        PasteName.Text,
+                        PastebinAPI.Language.Parse(SyntaxHighlighting.Text.ToLower()),
+                        (PastebinAPI.Visibility)Enum.Parse(typeof(PastebinAPI.Visibility), PasteExposure.Text),
+                        PastebinHelper.StringToExpirationDictionary[PasteExpiration.Text]);
+                else
+                    paste = await Paste.CreateAsync(
+                        _text,
+                        PasteName.Text,
+                        PastebinAPI.Language.Parse(SyntaxHighlighting.Text.ToLower()),
+                        (PastebinAPI.Visibility)Enum.Parse(typeof(PastebinAPI.Visibility), PasteExposure.Text),
+                        PastebinHelper.StringToExpirationDictionary[PasteExpiration.Text]);
                 if (paste.Url.StartsWith("https://pastebin.com/"))
                     PasteUrl.Text = paste.Url;
                 else
-                    MessageBox.Show(paste.Url, "Pastebin Extension");
+                    MessageBox.Show(paste.Url, PastebinHelper.DefaultCaption);
+            }
+        }
+
+        private void AuthorizationOnClick(Object sender, RoutedEventArgs e)
+        {
+            using (ButtonEnableWrapper wrapper = new ButtonEnableWrapper(AuthorizationButton))
+            {
+                if(AuthorizationManager.Authorized)
+                    AuthorizationManager.LogOut();
+                else
+                    new SignInWindow().ShowModal();
+                ApplyAuthorizedUserAbilities();
             }
         }
     }

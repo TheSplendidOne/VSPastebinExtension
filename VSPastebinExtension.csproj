@@ -46,6 +46,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ButtonEnableWrapper.cs" />
+    <Compile Include="SignInWindow.xaml.cs">
+      <DependentUpon>SignInWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MenuCommandEnableWrapper.cs" />
     <Compile Include="MainCommand.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -54,6 +57,7 @@
     <Compile Include="PastebinHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DocumentModel.cs" />
+    <Compile Include="AuthorizationManager.cs" />
     <Compile Include="VSPastebinExtensionPackage.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +73,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
@@ -87,6 +92,14 @@
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="ApplicationDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SignInWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -94,7 +107,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="PastebinIcon.png" />
     <Content Include="Resources\PastebinIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>

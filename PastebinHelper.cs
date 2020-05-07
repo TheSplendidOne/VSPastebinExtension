@@ -7,6 +7,8 @@ namespace VSPastebinExtension
 {
     public static class PastebinHelper
     {
+        public static String DefaultCaption => "Pastebin Extension";
+
         public static Dictionary<Expiration, String> ExpirationToStringDictionary = new Dictionary<Expiration, String>
         {
             {Expiration.Never, "Never"},
@@ -28,6 +30,11 @@ namespace VSPastebinExtension
             {"2 weeks", Expiration.TwoWeeks},
             {"1 month", Expiration.OneMonth}
         };
+
+        public static void ApplyDevKey()
+        {
+            Pastebin.DevKey = "4c8e82e3e03bef45028b783ecc14ace5";
+        }
 
         public static String IdentifyLanguage(String language)
         {
