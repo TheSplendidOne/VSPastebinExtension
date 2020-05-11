@@ -7,50 +7,61 @@
              xmlns:platformUi="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.15.0"
              xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="VSPastebinExtension.MainWindow"
              mc:Ignorable="d"
+             ResizeMode="NoResize"
              Title="Pastebin Extension"
              SizeToContent="WidthAndHeight">
     <platformUi:DialogWindow.Resources>
         <ResourceDictionary Source="ApplicationDictionary.xaml"/>
     </platformUi:DialogWindow.Resources>
-    <StackPanel Margin="{DynamicResource MainContainerMargin}">
-        <TextBlock Text="Optional Paste Settings" FontSize="{DynamicResource TitleFontSize}"/>
-        <Grid Margin="{DynamicResource DefaultGridMargin}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="260"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" Style="{DynamicResource LeftColumnTextBlock}" Text="Paste Name / Title:"/>
-            <TextBlock Grid.Column="0" Grid.Row="1" Style="{DynamicResource LeftColumnTextBlock}" Text="Syntax Highlighting:"/>
-            <TextBlock Grid.Column="0" Grid.Row="2" Style="{DynamicResource LeftColumnTextBlock}" Text="Paste Expiration:"/>
-            <TextBlock Grid.Column="0" Grid.Row="3" Style="{DynamicResource LeftColumnTextBlock}" Text="Paste Exposure:"/>
-            <TextBox Name="PasteName" Grid.Column="1" Grid.Row="0" Style="{DynamicResource RightColumnTextBox}" MaxLength="60"/>
-            <ComboBox Name="SyntaxHighlighting" Grid.Column="1" Grid.Row="1" Style="{DynamicResource RightColumnComboBox}"/>
-            <ComboBox Name="PasteExpiration" Grid.Column="1" Grid.Row="2" Style="{DynamicResource RightColumnComboBox}"/>
-            <ComboBox Name="PasteExposure" Grid.Column="1" Grid.Row="3" Style="{DynamicResource RightColumnComboBox}"/>
-        </Grid>
-        <Grid Margin="{DynamicResource DefaultGridMargin}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Button Name="AuthorizationButton" Grid.Column="0" Style="{DynamicResource Button}" Click="AuthorizationOnClick"/>
-            <TextBlock Name="Username" Grid.Column="1" Style="{DynamicResource SubcolumnForm}" Padding="{DynamicResource FormPadding}"/>
-            <CheckBox Name="PasteAsAGuestCheckBox" Grid.Column="2" Style="{DynamicResource SubcolumnForm}" Padding="{DynamicResource FormPadding}" VerticalContentAlignment="Center" Content="Paste as a guest"/>
-        </Grid>
-        <Grid Margin="{DynamicResource DefaultGridMargin}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button Name="PasteButton" Grid.Column="0" Style="{DynamicResource Button}" Content="Paste" Click="PasteOnClick" IsDefault="True"/>
-            <TextBox Name="PasteUrl" Grid.Column="1" Style="{DynamicResource SubcolumnForm}" Padding="{DynamicResource FormPadding}" IsReadOnly="True"/>
-        </Grid>
-    </StackPanel>
+    <DockPanel>
+        <StackPanel Margin="{DynamicResource MainContainerMargin}" DockPanel.Dock="Left">
+            <TextBlock Text="New Paste" FontSize="{DynamicResource TitleFontSize}"/>
+            <RichTextBox Height="342" Width="500" Margin="{DynamicResource DefaultGridMargin}" VerticalScrollBarVisibility="Auto">
+                <FlowDocument>
+                    <Paragraph Name="PasteText"/>
+                </FlowDocument>
+            </RichTextBox>
+        </StackPanel>
+        <StackPanel Margin="{DynamicResource MainContainerMargin}" DockPanel.Dock="Right">
+            <TextBlock Text="Optional Paste Settings" FontSize="{DynamicResource TitleFontSize}"/>
+            <Grid Margin="{DynamicResource DefaultGridMargin}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="260"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" Style="{DynamicResource LeftColumnTextBlock}" Text="Paste Name / Title:"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Style="{DynamicResource LeftColumnTextBlock}" Text="Syntax Highlighting:"/>
+                <TextBlock Grid.Column="0" Grid.Row="2" Style="{DynamicResource LeftColumnTextBlock}" Text="Paste Expiration:"/>
+                <TextBlock Grid.Column="0" Grid.Row="3" Style="{DynamicResource LeftColumnTextBlock}" Text="Paste Exposure:"/>
+                <TextBox Name="PasteName" Grid.Column="1" Grid.Row="0" Style="{DynamicResource RightColumnTextBox}" MaxLength="60"/>
+                <ComboBox Name="SyntaxHighlighting" Grid.Column="1" Grid.Row="1" Style="{DynamicResource RightColumnComboBox}"/>
+                <ComboBox Name="PasteExpiration" Grid.Column="1" Grid.Row="2" Style="{DynamicResource RightColumnComboBox}"/>
+                <ComboBox Name="PasteExposure" Grid.Column="1" Grid.Row="3" Style="{DynamicResource RightColumnComboBox}"/>
+            </Grid>
+            <Grid Margin="{DynamicResource DefaultGridMargin}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Name="AuthorizationButton" Grid.Column="0" Style="{DynamicResource Button}" Click="AuthorizationOnClick"/>
+                <TextBlock Name="Username" Grid.Column="1" Style="{DynamicResource SubcolumnForm}" Padding="{DynamicResource FormPadding}"/>
+                <CheckBox Name="PasteAsAGuestCheckBox" Grid.Column="2" Style="{DynamicResource SubcolumnForm}" Padding="{DynamicResource FormPadding}" VerticalContentAlignment="Center" Content="Paste as a guest"/>
+            </Grid>
+            <Grid Margin="{DynamicResource DefaultGridMargin}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Name="PasteButton" Grid.Column="0" Style="{DynamicResource Button}" Content="Paste" Click="PasteOnClick" IsDefault="True"/>
+                <TextBox Name="PasteUrl" Grid.Column="1" Style="{DynamicResource SubcolumnForm}" Padding="{DynamicResource FormPadding}" IsReadOnly="True"/>
+            </Grid>
+        </StackPanel>
+    </DockPanel>
 </platformUi:DialogWindow>

@@ -41,11 +41,8 @@ namespace VSPastebinExtension
         {
             using (MenuCommandEnableWrapper wrapper = new MenuCommandEnableWrapper(attachedMenuCommand))
             {
-                DocumentModel model = await DocumentModel.GetActiveDocumentAsync(package);
-                if (model == null)
-                    MessageBox.Show("Open the file to paste!", PastebinHelper.DefaultCaption);
-                else
-                    new MainWindow(model).ShowModal();
+                DocumentModel model = await DocumentModel.GetActiveDocumentAsync(package) ?? DocumentModel.GetEmpty();
+                new MainWindow(model).ShowModal();
             }
         }
     }

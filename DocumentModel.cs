@@ -36,6 +36,11 @@ namespace VSPastebinExtension
             }
         }
 
+        public static DocumentModel GetEmpty()
+        {
+            return new DocumentModel(String.Empty, String.Empty, String.Empty);
+        }
+
         private static String GetCurrentTextFile(Document document)
         {
             ThreadHelper.ThrowIfNotOnUIThread(nameof(GetCurrentTextFile));
