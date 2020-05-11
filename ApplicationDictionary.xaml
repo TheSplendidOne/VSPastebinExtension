@@ -8,7 +8,7 @@
     <Thickness x:Key="RightColumnMargin">0,15,0,15</Thickness>
     <Thickness x:Key="DefaultGridMargin">0,15,0,0</Thickness>
     <Thickness x:Key="ButtonPadding">20,5</Thickness>
-    <Thickness x:Key="MainContainerMargin">25</Thickness>
+    <Thickness x:Key="MainContainerMargin">20</Thickness>
     <Thickness x:Key="SubcolumnMargin">20,0,0,0</Thickness>
     <Thickness x:Key="FormPadding">5,5</Thickness>
     <Style x:Key="Form">

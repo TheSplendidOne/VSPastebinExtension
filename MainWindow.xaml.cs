@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Documents;
 using Microsoft.VisualStudio.PlatformUI;
 using PastebinAPI;
 
@@ -7,8 +8,6 @@ namespace VSPastebinExtension
 {
     public partial class MainWindow : DialogWindow
     {
-        private readonly String _text;
-
         public MainWindow(DocumentModel model)
         {
             InitializeComponent();
@@ -17,7 +16,7 @@ namespace VSPastebinExtension
             PasteName.Text = model.Name;
             PasteExpiration.Text = PastebinHelper.ExpirationToStringDictionary[Expiration.OneMonth];
             SyntaxHighlighting.Text = PastebinHelper.IdentifyLanguage(model.Language).ToUpper();
-            _text = model.Text;
+            PasteText.Inlines.Add(model.Text);
         }
 
         private void InitializeComboBoxes()
@@ -66,25 +65,32 @@ namespace VSPastebinExtension
             using (ButtonEnableWrapper wrapper = new ButtonEnableWrapper(PasteButton))
             {
                 PastebinHelper.ApplyDevKey();
-                Paste paste;
-                if(AuthorizationManager.Authorized && !(Boolean)PasteAsAGuestCheckBox.IsChecked)
-                    paste = await AuthorizationManager.CurrentUser.CreatePasteAsync(
-                        _text,
-                        PasteName.Text,
-                        PastebinAPI.Language.Parse(SyntaxHighlighting.Text.ToLower()),
-                        (PastebinAPI.Visibility)Enum.Parse(typeof(PastebinAPI.Visibility), PasteExposure.Text),
-                        PastebinHelper.StringToExpirationDictionary[PasteExpiration.Text]);
-                else
-                    paste = await Paste.CreateAsync(
-                        _text,
-                        PasteName.Text,
-                        PastebinAPI.Language.Parse(SyntaxHighlighting.Text.ToLower()),
-                        (PastebinAPI.Visibility)Enum.Parse(typeof(PastebinAPI.Visibility), PasteExposure.Text),
-                        PastebinHelper.StringToExpirationDictionary[PasteExpiration.Text]);
-                if (paste.Url.StartsWith("https://pastebin.com/"))
-                    PasteUrl.Text = paste.Url;
-                else
-                    MessageBox.Show(paste.Url, PastebinHelper.DefaultCaption);
+                try
+                {
+                    Paste paste;
+                    if(AuthorizationManager.Authorized && !(Boolean)PasteAsAGuestCheckBox.IsChecked)
+                        paste = await AuthorizationManager.CurrentUser.CreatePasteAsync(
+                            ((Run)PasteText.Inlines.FirstInline).Text,
+                            PasteName.Text,
+                            PastebinAPI.Language.Parse(SyntaxHighlighting.Text.ToLower()),
+                            (PastebinAPI.Visibility)Enum.Parse(typeof(PastebinAPI.Visibility), PasteExposure.Text),
+                            PastebinHelper.StringToExpirationDictionary[PasteExpiration.Text]);
+                    else
+                        paste = await Paste.CreateAsync(
+                            ((Run)PasteText.Inlines.FirstInline).Text,
+                            PasteName.Text,
+                            PastebinAPI.Language.Parse(SyntaxHighlighting.Text.ToLower()),
+                            (PastebinAPI.Visibility)Enum.Parse(typeof(PastebinAPI.Visibility), PasteExposure.Text),
+                            PastebinHelper.StringToExpirationDictionary[PasteExpiration.Text]);
+                    if(paste.Url.StartsWith("https://pastebin.com/"))
+                        PasteUrl.Text = paste.Url;
+                    else
+                        MessageBox.Show(paste.Url, PastebinHelper.DefaultCaption);
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message, PastebinHelper.DefaultCaption);
+                }
             }
         }
 
