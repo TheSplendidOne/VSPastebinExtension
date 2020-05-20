@@ -1,0 +1,21 @@
+name: NetFramework.CI
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout to basic directory
+      uses: actions/checkout@v1
+    - name: Setup Nuget.exe
+      uses: warrenbuckley/Setup-Nuget@v1
+    - name: Restore packages
+      run: nuget restore VSPastebinExtension.sln
+    - name: Setup MSBuild.exe
+      uses: warrenbuckley/Setup-MSBuild@v1
+    - name: Build with MSBuild
+      run: msbuild VSPastebinExtension.sln -p:Configuration=Release
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: VSIX
+        path: bin/Release/VSPastebinExtension.vsix
