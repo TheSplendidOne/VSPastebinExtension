@@ -14,7 +14,7 @@ namespace VSPastebinExtension
             InitializeComboBoxes();
             ApplyAuthorizedUserAbilities();
             PasteName.Text = model.Name;
-            PasteExpiration.Text = PastebinHelper.ExpirationToStringDictionary[Expiration.OneMonth];
+            PasteExpiration.Text = PastebinHelper.ExpirationToStringDictionary[Expiration.Never];
             SyntaxHighlighting.Text = PastebinHelper.IdentifyLanguage(model.Language).ToUpper();
             PasteText.Inlines.Add(model.Text);
         }
